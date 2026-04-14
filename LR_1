@@ -1,0 +1,29 @@
+            Console.WriteLine("Лабораторная работа №1");
+            Console.WriteLine("Тема: РАЗРАБОТКА КОНСОЛЬНОГО ПРИЛОЖЕНИЯ");
+            Console.WriteLine("ФИО студента: Кутепов Глеб Евгеньевич");
+            Console.WriteLine("Группа: ИСиТ-з-24/1");
+            Console.WriteLine("Шифр специальности: 09.03.02");
+            Console.WriteLine("Дата рождения: 12.05.2003");
+            Console.WriteLine("Населенный пункт постоянного места жительства: г. Ставрополь");
+            Console.WriteLine("Любимый предмет в школе: Изо");
+            Console.WriteLine("Краткое описание увлечений, хобби, интересов: программирование, баскетбол");
+
+            Console.WriteLine("==================================================");
+
+            double wll = 12.5;   
+            int bt = 8;          
+            int x = 4;           
+            double y = 3.0;      
+            double w = 2.5;      
+
+            double Se = wll + bt - x + y * w;
+
+            Console.WriteLine("Исходные данные:");
+            Console.WriteLine($"wll = {wll:F2}");
+            Console.WriteLine($"bt  = {bt}");
+            Console.WriteLine($"x   = {x}");
+            Console.WriteLine($"y   = {y:F2}");
+            Console.WriteLine($"w   = {w:F2}");
+            Console.WriteLine("\nВыражение: Se = wll + bt - x + y * w");
+            Console.WriteLine($"Результат: Se = {Se:F4}");
+            Console.ReadKey();
