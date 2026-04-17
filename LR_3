@@ -1,0 +1,29 @@
+            Console.Write("Введите X: ");
+            double X = double.Parse(Console.ReadLine());
+
+            Console.Write("Введите Y: ");
+            double Y = double.Parse(Console.ReadLine());
+
+            Console.Write("Введите количество членов ряда N: ");
+            int N = int.Parse(Console.ReadLine());
+
+            double sum = 0;
+
+            for (int n = 1; n <= N; n++)
+            {
+                double denominator = n * (n + 2) * (n + 4);
+
+                double term;
+                if (n % 2 == 1) 
+                {
+                    term = Math.Pow(Y, n - 1) / denominator;
+                    sum += term;
+                }
+                else 
+                {
+                    term = Math.Pow(X, n - 1) / denominator;
+                    sum -= term;
+                }
+            }
+
+            Console.WriteLine($"Сумма ряда: Z = {sum:F6}");
