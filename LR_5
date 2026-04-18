@@ -1,0 +1,105 @@
+using System;
+using System.IO;
+
+namespace LR_5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] lines = File.ReadAllLines("input.txt");
+
+            string[] sizes = lines[0].Split(' ');
+            int M = int.Parse(sizes[0]);
+            int N = int.Parse(sizes[1]);
+
+            int[,] matrix = new int[M, N];
+
+            for (int i = 0; i < M; i++)
+            {
+                string[] values = lines[i + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int j = 0; j < N; j++)
+                {
+                    matrix[i, j] = int.Parse(values[j]);
+                }
+            }
+
+            StreamWriter writer = new StreamWriter("output.txt");
+
+            writer.WriteLine("Исходная матрица:");
+            for (int i = 0; i < M; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    writer.Write(matrix[i, j] + "\t");
+                }
+                writer.WriteLine();
+            }
+            writer.WriteLine();
+
+            writer.WriteLine("Минимальные элементы по строкам:");
+            for (int i = 0; i < M; i++)
+            {
+                int minRow = matrix[i, 0];
+                for (int j = 1; j < N; j++)
+                {
+                    if (matrix[i, j] < minRow)
+                    {
+                        minRow = matrix[i, j];
+                    }
+                }
+                writer.WriteLine("Строка " + (i + 1) + ": " + minRow);
+            }
+            writer.WriteLine();
+
+            int sumPositive = 0;
+            int countPositive = 0;
+
+            for (int i = 0; i < M; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    if (matrix[i, j] > 0)
+                    {
+                        sumPositive += matrix[i, j];
+                        countPositive++;
+                    }
+                }
+            }
+
+            double sp = 0;
+            if (countPositive > 0)
+            {
+                sp = (double)sumPositive / countPositive;
+            }
+
+            writer.WriteLine("Среднее арифметическое положительных элементов (sp): " + sp);
+            writer.WriteLine();
+
+            Console.Write("Введите x (значение для замены элементов, меньших sp): ");
+            int x = int.Parse(Console.ReadLine());
+            Console.Write("Введите y (значение для остальных элементов): ");
+            int y = int.Parse(Console.ReadLine());
+
+            writer.WriteLine("Модифицированная матрица:");
+            for (int i = 0; i < M; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    if (matrix[i, j] < sp)
+                    {
+                        writer.Write(x + "\t");
+                    }
+                    else
+                    {
+                        writer.Write(y + "\t");
+                    }
+                }
+                writer.WriteLine();
+            }
+
+            writer.Close();
+            Console.WriteLine("Результат записан в файл output.txt");
+        }
+    }
+}
