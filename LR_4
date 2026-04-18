@@ -1,0 +1,106 @@
+using System;
+using System.IO;
+using System.Globalization;
+
+namespace LR_4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                if (!File.Exists("input.txt"))
+                {
+                    Console.WriteLine("Файл input.txt не найден!");
+                    return;
+                }
+
+                string[] lines = File.ReadAllLines("input.txt");
+
+                if (lines.Length < 2)
+                {
+                    Console.WriteLine("В файле должно быть 2 строки!");
+                    return;
+                }
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    lines[i] = lines[i].Trim();
+                }
+
+                int N = int.Parse(lines[0]);
+
+                string[] parts = lines[1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length < N)
+                {
+                    Console.WriteLine("Чисел меньше, чем указано в первой строке!");
+                    return;
+                }
+
+                double[] numbers = new double[N];
+                for (int i = 0; i < N; i++)
+                {
+                    string numStr = parts[i].Trim().Replace(',', '.');
+                    numbers[i] = double.Parse(numStr, CultureInfo.InvariantCulture);
+                }
+
+                double product = 1;
+                int countLess = 0;
+
+                for (int i = 0; i < N; i++)
+                {
+                    if (numbers[i] < 50)
+                    {
+                        product = product * numbers[i];
+                        countLess++;
+                    }
+                }
+
+                if (countLess == 0)
+                {
+                    product = 0;
+                }
+
+                double sum = 0;
+                for (int i = 0; i < N; i++)
+                {
+                    sum = sum + numbers[i];
+                }
+                double average = sum / N;
+
+                double sumGreater = 0;
+                for (int i = 0; i < N; i++)
+                {
+                    if (numbers[i] > average)
+                    {
+                        sumGreater = sumGreater + numbers[i];
+                    }
+                }
+
+                double min = numbers[0];
+                for (int i = 1; i < N; i++)
+                {
+                    if (numbers[i] < min)
+                    {
+                        min = numbers[i];
+                    }
+                }
+
+                // Запись в выходной файл
+                StreamWriter writer = new StreamWriter("output.txt");
+                writer.WriteLine("Произведение чисел, меньших 50: " + product);
+                writer.WriteLine("Сумма чисел, больших среднего: " + sumGreater);
+                writer.WriteLine("Минимальное число: " + min);
+                writer.Close();
+
+                Console.WriteLine("Готово! Результат в файле output.txt");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ошибка: " + ex.Message);
+            }
+        }
+    }
+}
