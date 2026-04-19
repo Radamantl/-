@@ -1,0 +1,76 @@
+public Form1()
+        {
+            InitializeComponent();
+
+            comboBoxW.SelectedIndex = 0;
+            listBoxT.SelectedIndex = 0;
+            txtN.Text = "10";
+        }
+
+        private long Factorial(int n)
+        {
+            long result = 1;
+            for (int i = 2; i <= n; i++)
+                result *= i;
+            return result;
+        }
+
+        private double CalculateZ(double X, double Y, int N)
+        {
+            double sum = 0;
+
+            
+            sum = -0.5;
+
+            for (int n = 2; n <= N; n++)
+            {
+                long denominator = Factorial(n + 1);
+                double term;
+
+                if (n % 2 == 0)  
+                {
+                    term = Math.Pow(Y, n - 1) / denominator;
+                    sum += term;
+                }
+                else 
+                {
+                    term = Math.Pow(X, n - 1) / denominator;
+                    sum -= term;
+                }
+            }
+
+            return sum;
+        }
+        private void btnCalc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double X = Convert.ToDouble(txtX.Text);
+                double Y = Convert.ToDouble(txtY.Text);
+                int N = Convert.ToInt32(txtN.Text);
+
+                if (N < 1)
+                {
+                    MessageBox.Show("N должно быть больше 0!", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                double W = Convert.ToDouble(comboBoxW.SelectedItem.ToString());
+                double T = Convert.ToDouble(listBoxT.SelectedItem.ToString());
+                double Z = CalculateZ(X, Y, N);
+                double Z00 = W * X - T * Y + 7;
+
+                txtResult.Text = $"Z = {Z:F6}\r\nZ00 = {Z00:F6}";
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Пожалуйста, введите корректные числовые значения!",
+                    "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
